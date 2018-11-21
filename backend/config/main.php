@@ -38,20 +38,22 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
-                ],
-            ],
-        ],
+//        'view' => [
+//            'theme' => [
+//                'pathMap' => [
+//                    '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
+//                ],
+//            ],
+//        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => true,
            'enableStrictParsing' => true,
             'rules' => [
-                '/' => 'site/index',
+               '/' => 'site/index',
+                '/tasks'=>'tasks/index',
+                '/user'=>'user/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
