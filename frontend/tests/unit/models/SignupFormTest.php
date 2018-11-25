@@ -28,6 +28,7 @@ class SignupFormTest extends \Codeception\Test\Unit
             'username' => 'some_username',
             'email' => 'some_email@example.com',
             'password' => 'some_password',
+            'password_repeat' => 'some_password',
         ]);
 
         $user = $model->signup();
@@ -36,6 +37,7 @@ class SignupFormTest extends \Codeception\Test\Unit
 
         expect($user->username)->equals('some_username');
         expect($user->email)->equals('some_email@example.com');
+        expect($model->password_repeat)->equals($model->password);
         expect($user->validatePassword('some_password'))->true();
     }
 
