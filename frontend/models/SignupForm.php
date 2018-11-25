@@ -34,8 +34,8 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
-            [['password'], 'compare', 'compareAttribute'=>'password_repeat', 'message'=>"Passwords don't match"],
-            [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match"],
+            [['password'], 'compare', 'compareAttribute'=>'password_repeat', 'message'=>"Passwords doesn't match"],
+            [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords doesn't match"],
 
         ];
     }

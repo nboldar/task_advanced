@@ -47,12 +47,15 @@ class SignupFormTest extends \Codeception\Test\Unit
             'username' => 'troy.becker',
             'email' => 'nicolas.dianna@hotmail.com',
             'password' => 'some_password',
+            'password_repeat' => 'another_password',
         ]);
 
         expect_not($model->signup());
         expect_that($model->getErrors('username'));
         expect_that($model->getErrors('email'));
-
+        expect_that($model->getErrors('password_repeat'));
+        expect($model->getFirstError('password_repeat'))
+            ->equals('Passwords doesn\'t match.');
         expect($model->getFirstError('username'))
             ->equals('This username has already been taken.');
         expect($model->getFirstError('email'))
