@@ -16,14 +16,16 @@ class m181121_191807_create_tasks_table extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string(100)->notNull(),
             'description' => $this->text(),
-            'user_id' => $this->integer()->notNull(),
+            'creator' => $this->integer()->notNull(),
+            'executor' => $this->integer()->notNull(),
             'start' => $this->date()->notNull(),
             'finish' => $this->date()->notNull(),
-            'done' => $this->integer()->notNull()->defaultValue('0'),
+            'status' => $this->integer()->notNull()->defaultValue('0'),
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
         ]);
-        $this->addForeignKey('fk_user_id', 'tasks', 'user_id', 'user', 'id');
+        $this->addForeignKey('fk_creator_id', 'tasks', 'creator', 'user', 'id');
+        $this->addForeignKey('fk_executor_id', 'tasks', 'executor', 'user', 'id');
     }
 
     /**

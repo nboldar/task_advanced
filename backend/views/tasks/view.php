@@ -31,10 +31,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'user_id',
+            [
+                'attribute' => 'creator',
+                'value' => $model->creator0->username,
+            ],
+            [
+                'attribute' => 'executor',
+                'value' => $model->executor0->username,
+            ],
             'start',
             'finish',
-            'done',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    if ($model->status == 0) {
+                        return 'not done';
+                    }else{
+                        return 'done';
+                    }
+                },
+            ],
             'created_at',
             'updated_at',
         ],

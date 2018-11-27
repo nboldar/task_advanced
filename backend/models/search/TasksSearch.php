@@ -18,7 +18,7 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['id', 'user_id', 'done'], 'integer'],
+            [['id', 'creator', 'executor', 'status'], 'integer'],
             [['title', 'description', 'start', 'finish', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -47,6 +47,11 @@ class TasksSearch extends Tasks
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'forcePageParam' => false,
+                'pageSizeParam' => false,
+                'pageSize' => 2
+            ]
         ]);
 
         $this->load($params);
@@ -60,10 +65,11 @@ class TasksSearch extends Tasks
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'creator' => $this->creator,
+            'executor' => $this->executor,
             'start' => $this->start,
             'finish' => $this->finish,
-            'done' => $this->done,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

@@ -27,13 +27,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'description:ntext',
-            'user_id',
+           // 'description:ntext',
+            [
+                'attribute' => 'creator',
+                'value' => 'creator0.username',
+            ],
+            [
+                'attribute' => 'executor',
+                'value' => 'executor0.username',
+            ],
             'start',
-            //'finish',
-            //'done',
-            //'created_at',
-            //'updated_at',
+            'finish',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    if ($model->status == 0) {
+                        return 'not done';
+                    } else {
+                        return 'done';
+                    }
+                },
+            ],
+            'created_at',
+            'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

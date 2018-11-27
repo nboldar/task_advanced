@@ -4,23 +4,26 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
+use yii\swiftmailer\Mailer;
+
 /**
  * This is the model class for table "tasks".
  *
  * @property int $id
  * @property string $title
  * @property string $description
- * @property int $user_id
+ * @property int $creator
+ * @property int $executor
  * @property string $start
  * @property string $finish
- * @property int $done
+ * @property int $status
  * @property string $created_at
  * @property string $updated_at
  *
- * @property User $user
+ * @property User $creator0
+ * @property User $executor0
  */
-class Tasks extends ActiveRecord
+class Tasks extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,12 +39,13 @@ class Tasks extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'user_id', 'start', 'finish'], 'required'],
+            [['title', 'executor', 'start', 'finish'], 'required'],
             [['description'], 'string'],
-            [['user_id', 'done'], 'integer'],
+            [['creator', 'executor', 'status'], 'integer'],
             [['start', 'finish', 'created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['creator'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator' => 'id']],
+            [['executor'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['executor' => 'id']],
         ];
     }
 
@@ -54,14 +58,16 @@ class Tasks extends ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
-            'user_id' => 'User ID',
+            'creator' => 'Creator',
+            'executor' => 'Executor',
             'start' => 'Start',
             'finish' => 'Finish',
-            'done' => 'Done',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
+
     public function behaviors()
     {
         return [
@@ -79,8 +85,24 @@ class Tasks extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getCreator0()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'creator']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExecutor0()
+    {
+        return $this->hasOne(User::className(), ['id' => 'executor']);
+    }
+
+    public function insert ($runValidation = true, $attributes = null)
+    {
+        $this->setAttribute('creator', \Yii::$app->user->getId());
+        return parent::insert($runValidation, $attributes);
+    }
+
+
 }

@@ -21,13 +21,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field($model, 'creator') ?>
 
-    <?= $form->field($model, 'start') ?>
+    <?= $form->field($model, 'executor') ?>
+
+    <?php // echo $form->field($model, 'start') ?>
 
     <?php // echo $form->field($model, 'finish') ?>
 
-    <?php // echo $form->field($model, 'done') ?>
+    <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
