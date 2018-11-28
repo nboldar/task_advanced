@@ -12,6 +12,8 @@ body {
 
 .wrap > .container {
     padding: 70px 15px 20px;
+    width: auto;
+    margin: 20px;
 }
 
 .footer {
