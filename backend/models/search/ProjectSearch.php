@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Tasks;
+use common\models\Project;
 
 /**
- * TasksSearch represents the model behind the search form of `common\models\Tasks`.
+ * ProjectSearch represents the model behind the search form of `common\models\Project`.
  */
-class TasksSearch extends Tasks
+class ProjectSearch extends Project
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['id', 'creator', 'executor', 'status','project'], 'integer'],
-            [['title', 'description', 'start', 'finish', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'creator', 'status'], 'integer'],
+            [['title', 'description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -41,17 +41,12 @@ class TasksSearch extends Tasks
      */
     public function search($params)
     {
-        $query = Tasks::find();
+        $query = Project::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'forcePageParam' => false,
-                'pageSizeParam' => false,
-                'pageSize' => 2
-            ]
         ]);
 
         $this->load($params);
@@ -66,11 +61,7 @@ class TasksSearch extends Tasks
         $query->andFilterWhere([
             'id' => $this->id,
             'creator' => $this->creator,
-            'executor' => $this->executor,
-            'start' => $this->start,
-            'finish' => $this->finish,
             'status' => $this->status,
-            'project'=>$this->project,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

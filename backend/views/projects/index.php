@@ -2,24 +2,29 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
+
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\search\TasksSearch */
+/* @var $searchModel backend\models\search\ProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tasks';
+$this->title = 'Projects';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tasks-index">
+
+<div class="project-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Project', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?php  ?>
+    <?php Pjax::begin();
+   echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -27,21 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-           // 'description:ntext',
-            [
-                'attribute' => 'project',
-                'value' => 'project0.title',
-            ],
+            //'description:ntext',
             [
                 'attribute' => 'creator',
                 'value' => 'creator0.username',
             ],
-            [
-                'attribute' => 'executor',
-                'value' => 'executor0.username',
-            ],
-            'start',
-            'finish',
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
@@ -52,10 +47,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
-            'created_at',
-            'updated_at',
+            //'created_at',
+            //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    echo Html::a('Refresh', ['./projects'], ['class' => 'btn btn-default']);
+    Pjax::end();
+    ?>
+    <?php  ?>
+
 </div>

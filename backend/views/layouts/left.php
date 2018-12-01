@@ -43,6 +43,7 @@
                             ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
                             ['label' => 'Tasks', 'icon' => 'tasks', 'url' => ['/tasks'],],
                             ['label' => 'Users', 'icon' => 'users', 'url' => ['/user'],],
+                            ['label' => 'Projects', 'icon' => 'projects', 'url' => ['/projects'],],
                             [
                                 'label' => 'Level One',
                                 'icon' => 'circle-o',

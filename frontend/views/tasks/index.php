@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p>The task in process</p>
                     <?php endif; ?>
                     <p>
-                        <a href="./tasks/single?id=<?= $task->id ?>" class="btn btn-primary" role="button">Details</a>
+                        <a href="../tasks/single?id=<?= $task->id ?>" class="btn btn-primary" role="button">Details</a>
                         <a href="#" class="btn btn-default" role="button">Кнопка</a>
                     </p>
                 </div>

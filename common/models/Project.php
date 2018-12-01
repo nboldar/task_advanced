@@ -6,66 +6,56 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "tasks".
+ * This is the model class for table "project".
  *
  * @property int $id
  * @property string $title
  * @property string $description
  * @property int $creator
- * @property int $executor
- * @property string $start
- * @property string $finish
  * @property int $status
- * @property int $project
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Project $project0
  * @property User $creator0
- * @property User $executor0
+ * @property Tasks[] $tasks
  */
-class Tasks extends ActiveRecord
+class Project extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName ()
+    public static function tableName()
     {
-        return 'tasks';
+        return 'project';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules ()
+    public function rules()
     {
         return [
-            [['title', 'creator', 'executor', 'start', 'finish', 'project'], 'required'],
+            [['title', 'creator'], 'required'],
             [['description'], 'string'],
-            [['creator', 'executor', 'status', 'project'], 'integer'],
-            [['start', 'finish', 'created_at', 'updated_at'], 'safe'],
+            [['creator', 'status'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
-            [['project'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project' => 'id']],
             [['creator'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator' => 'id']],
-            [['executor'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['executor' => 'id']],
         ];
     }
 
+
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels ()
+    public function attributeLabels()
     {
         return [
             'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
             'creator' => 'Creator',
-            'executor' => 'Executor',
-            'start' => 'Start',
-            'finish' => 'Finish',
             'status' => 'Status',
-            'project' => 'Project',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -84,19 +74,10 @@ class Tasks extends ActiveRecord
         ];
     }
 
-
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProject0 ()
-    {
-        return $this->hasOne(Project::className(), ['id' => 'project']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreator0 ()
+    public function getCreator0()
     {
         return $this->hasOne(User::className(), ['id' => 'creator']);
     }
@@ -104,16 +85,8 @@ class Tasks extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getExecutor0 ()
+    public function getTasks()
     {
-        return $this->hasOne(User::className(), ['id' => 'executor']);
-    }
-
-
-
-    public function insert ($runValidation = true, $attributes = null)
-    {
-        $this->setAttribute('creator', \Yii::$app->user->getId());
-        return parent::insert($runValidation, $attributes);
+        return $this->hasMany(Tasks::className(), ['project' => 'id']);
     }
 }

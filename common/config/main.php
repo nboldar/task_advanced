@@ -19,8 +19,9 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 '/' => 'site/index',
-                '/tasks' => 'tasks/index',
+                '/projects/tasks' => 'tasks/index',
                 '/user' => 'user/index',
+                '/projects' => 'projects/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],

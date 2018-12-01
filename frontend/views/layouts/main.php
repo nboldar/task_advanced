@@ -40,7 +40,7 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
-        ['label' => 'Tasks', 'url' => ['/tasks']],
+        ['label' => 'Projects', 'url' => ['/projects']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -62,21 +62,26 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-        <div class="container">
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= Alert::widget() ?>
+    <div class="container">
+        <?= Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+        <?= Alert::widget() ?>
 
-            <div class="row">
+        <div class="row">
+            <?php if (\Yii::$app->request->pathInfo == '') : ?>
+                <div class="col-md-12">
+                    <?= $content ?>
+                </div>
+            <?php else : ?>
                 <div class="col-md-2">
                     <?= $this->render('left.php') ?>
                 </div>
                 <div class="col-md-10">
                     <?= $content ?>
                 </div>
-
-            </div>
+            <?php endif; ?>
+        </div>
 
     </div>
 </div>

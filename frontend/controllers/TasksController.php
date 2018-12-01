@@ -22,6 +22,7 @@ class TasksController extends \yii\web\Controller
 
     public function actionSingle ($id)
     {
+
         $model = $this->findModel($id);
         return $this->render('single', ['model' => $model,]);
     }

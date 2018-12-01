@@ -5,7 +5,9 @@
  * Date: 27.11.2018
  * Time: 22:27
  */
+
 use yii\bootstrap\Nav;
+use yii\helpers\Html;
 
 ?>
 <aside class="main-sidebar">
@@ -27,9 +29,32 @@ use yii\bootstrap\Nav;
 
         <?= Nav::widget(
             [
+                'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
-                    ['label' => 'Menu Tasks', 'options' => ['class' => 'header']],
+                    [
+                        'label' => '<span class="glyphicon glyphicon-th-list"></span> '
+                            . Html::encode('All Projects'),
+                        'options' => ['class' => 'header'],
+                        'items' => [
+                            [
+                                'label' => '<span class="glyphicon glyphicon-repeat"></span> '
+                                    . Html::encode('Projects in process'),
+                                'icon' => 'file-code-o',
+                                'url' => ['/gii'],
+                            ],
+                            [
+                                'label' => '<span class="glyphicon glyphicon-ok"></span> '
+                                    . Html::encode('Projects done'),
+                                'url' => ['/debug'],
+                            ],
+                            ['label' => '<span class="glyphicon glyphicon-alert"></span> '
+                                . Html::encode('Projects done'),
+                                'icon' => 'tasks',
+                                'url' => ['/tasks'],
+                                ],
+                        ],
+                    ],
                     ['label' => 'Show done tasks', 'icon' => 'tasks', 'url' => ['/gii']],
                     ['label' => 'Show not done tasks', 'icon' => 'tasks', 'url' => ['/debug']],
                     ['label' => 'Projects', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
@@ -46,18 +71,7 @@ use yii\bootstrap\Nav;
                                 'label' => 'Level One',
                                 'icon' => 'circle-o',
                                 'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
+
                             ],
                         ],
                     ],
