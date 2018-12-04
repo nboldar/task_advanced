@@ -27,9 +27,9 @@ use common\models\User;
     ] ?>
     <?= $form->field($model, 'status')->dropDownList(ArrayHelper::map($status, 'value', 'title')) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+<!--    --><?//= $form->field($model, 'created_at')->textInput() ?>
+<!---->
+<!--    --><?//= $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

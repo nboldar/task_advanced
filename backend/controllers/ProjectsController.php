@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\TelegramProjectSign;
 use Yii;
 use common\models\Project;
 use backend\models\search\ProjectSearch;
@@ -17,7 +18,7 @@ class ProjectsController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    public function behaviors ()
     {
         return [
             'verbs' => [
@@ -33,7 +34,7 @@ class ProjectsController extends Controller
      * Lists all Project models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex ()
     {
         $searchModel = new ProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -46,11 +47,13 @@ class ProjectsController extends Controller
 
     /**
      * Displays a single Project model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView ($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -62,11 +65,20 @@ class ProjectsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate ()
     {
         $model = new Project();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $telegramUsers = TelegramProjectSign::find()->select('id')->asArray()->all();
+            $bot = \Yii::$app->bot;
+            $bot->setCurlOption(CURLOPT_TIMEOUT, 60);
+            $bot->setCurlOption(CURLOPT_CONNECTTIMEOUT, 60);
+            $bot->setCurlOption(CURLOPT_HTTPHEADER, ['Expect:']);
+            $message = "New '{$model->title}' project starts. Creator: {$model->creator0->username}";
+            foreach ($telegramUsers as $telegramUser) {
+                $bot->sendMessage($telegramUser, $message);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -78,11 +90,13 @@ class ProjectsController extends Controller
     /**
      * Updates an existing Project model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate ($id)
     {
         $model = $this->findModel($id);
 
@@ -98,11 +112,13 @@ class ProjectsController extends Controller
     /**
      * Deletes an existing Project model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete ($id)
     {
         $this->findModel($id)->delete();
 
@@ -112,11 +128,13 @@ class ProjectsController extends Controller
     /**
      * Finds the Project model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
+     *
      * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel ($id)
     {
         if (($model = Project::findOne($id)) !== null) {
             return $model;

@@ -6,6 +6,10 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'bot' => [
+            'class' => 'SonkoDmitry\Yii\TelegramBot\Component',
+            'apiToken' => '799805964:AAEQyPmfLUIkQDGsvFZtw8yDzQPUG5Yy2UA',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -22,6 +26,7 @@ return [
                 '/projects/tasks' => 'tasks/index',
                 '/user' => 'user/index',
                 '/projects' => 'projects/index',
+                '/telegram' => 'telegram/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
