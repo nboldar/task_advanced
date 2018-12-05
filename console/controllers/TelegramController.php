@@ -68,6 +68,7 @@ class TelegramController extends Controller
         $command = $params[0];
         var_dump($command);
         $response = "";
+        $telegramId = $message->getFrom()->getId();
         switch ($command) {
             case "/help":
                 $response = "Available commands: \n";
@@ -77,9 +78,9 @@ class TelegramController extends Controller
                 $response .= "/task_create  ##task_name## -create new task with specified name; \n";
                 break;
             case '/project_signup':
-                $telegramId=$message->getFrom()->getId();
-                $model=new TelegramProjectSign([
-                    'telegram_id' => $telegramId
+
+                $model = new TelegramProjectSign([
+                    'telegram_id' => $telegramId,
                 ]);
                 $model->save();
                 $response = "You are signed up to know about new project \n";
@@ -87,7 +88,7 @@ class TelegramController extends Controller
             default:
                 $response = "unknown command \n";
         }
-        $this->bot->sendMessage($message->getFrom()->getId(), $response);
+        $this->bot->sendMessage($telegramId, $response);
     }
 
 }

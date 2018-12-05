@@ -9,6 +9,7 @@ use backend\models\search\ProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use SonkoDmitry\Yii\TelegramBot\Component;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -70,14 +71,19 @@ class ProjectsController extends Controller
         $model = new Project();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $telegramUsers = TelegramProjectSign::find()->select('id')->asArray()->all();
+            $telegramUsers = TelegramProjectSign::find()->select('telegram_id')->asArray()->all();
+
+            /**
+             * @var $bot Component
+             */
             $bot = \Yii::$app->bot;
+
             $bot->setCurlOption(CURLOPT_TIMEOUT, 60);
             $bot->setCurlOption(CURLOPT_CONNECTTIMEOUT, 60);
             $bot->setCurlOption(CURLOPT_HTTPHEADER, ['Expect:']);
             $message = "New '{$model->title}' project starts. Creator: {$model->creator0->username}";
             foreach ($telegramUsers as $telegramUser) {
-                $bot->sendMessage($telegramUser, $message);
+                $bot->sendMessage($telegramUser['telegram_id'], $message);
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
