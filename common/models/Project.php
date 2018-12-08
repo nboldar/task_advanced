@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property string $updated_at
  *
  * @property User $creator0
- * @property Tasks[] $tasks
+ * @property Task[] $tasks
  */
 class Project extends ActiveRecord
 {
@@ -87,7 +87,7 @@ class Project extends ActiveRecord
      */
     public function getTasks()
     {
-        return $this->hasMany(Tasks::className(), ['project' => 'id']);
+        return $this->hasMany(Task::className(), ['project' => 'id']);
     }
 
 

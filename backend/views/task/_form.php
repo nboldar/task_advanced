@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 use common\models\Project;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Tasks */
+/* @var $model common\models\Task */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

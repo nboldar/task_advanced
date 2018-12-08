@@ -41,7 +41,7 @@
                         'items' => [
                             ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
                             ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            ['label' => 'Tasks', 'icon' => 'tasks', 'url' => ['/tasks'],],
+                            ['label' => 'Tasks', 'icon' => 'tasks', 'url' => ['/task'],],
                             ['label' => 'Users', 'icon' => 'users', 'url' => ['/user'],],
                             ['label' => 'Projects', 'icon' => 'projects', 'url' => ['/projects'],],
                             [

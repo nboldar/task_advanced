@@ -11,7 +11,7 @@ use common\models\User;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Tasks */
+/* @var $model common\models\Task */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = 'Update Tasks: ' . $model->title;

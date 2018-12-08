@@ -11,11 +11,20 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log',],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'api' => [
+            'class' => \frontend\modules\api\Api::className(),
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'cookieValidationKey' => $params['cookieValidationKey'],
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,

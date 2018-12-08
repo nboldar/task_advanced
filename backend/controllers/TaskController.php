@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Tasks;
-use backend\models\search\TasksSearch;
+use common\models\Task;
+use backend\models\search\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TasksController implements the CRUD actions for Tasks model.
+ * TaskController implements the CRUD actions for Tasks model.
  */
-class TasksController extends Controller
+class TaskController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class TasksController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new TasksSearch();
+        $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -64,7 +64,7 @@ class TasksController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Tasks();
+        $model = new Task();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -112,13 +112,15 @@ class TasksController extends Controller
     /**
      * Finds the Tasks model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
-     * @return Tasks the loaded model
+     *
+     * @return Task the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tasks::findOne($id)) !== null) {
+        if (($model = Task::findOne($id)) !== null) {
             return $model;
         }
 

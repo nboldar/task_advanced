@@ -66,7 +66,6 @@ class TelegramController extends Controller
     {
         $params = explode(" ", $message->getText());
         $command = $params[0];
-        var_dump($command);
         $response = "";
         $telegramId = $message->getFrom()->getId();
         switch ($command) {

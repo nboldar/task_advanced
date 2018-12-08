@@ -1,6 +1,6 @@
 <?php namespace frontend\tests\models;
 
-use common\models\Tasks;
+use common\models\Task;
 
 class TasksTest extends \Codeception\Test\Unit
 {
@@ -20,7 +20,7 @@ class TasksTest extends \Codeception\Test\Unit
     // tests
     public function testValidation ()
     {
-        $task = new Tasks();
+        $task = new Task();
         $task->setAttribute('title', null);
         $this->assertFalse($task->validate(['title']));
 

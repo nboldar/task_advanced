@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Tasks;
+use common\models\Task;
 use yii\web\NotFoundHttpException;
 use common\components\ChatServer;
 
@@ -16,7 +16,7 @@ class TasksController extends \yii\web\Controller
 //            $chat->start();
 //        }
 //$chat->start();
-        $tasks = Tasks::find()->all();
+        $tasks = Task::find()->all();
         return $this->render('index', ['tasks' => $tasks,]);
     }
 
@@ -38,7 +38,7 @@ class TasksController extends \yii\web\Controller
 
     protected function findModel ($id)
     {
-        if (($model = Tasks::findOne($id)) !== null) {
+        if (($model = Task::findOne($id)) !== null) {
             return $model;
         }
 

@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Tasks;
+use common\models\Task;
 
 /**
  * TasksSearch represents the model behind the search form of `common\models\Tasks`.
  */
-class TasksSearch extends Tasks
+class TaskSearch extends Task
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class TasksSearch extends Tasks
      */
     public function search($params)
     {
-        $query = Tasks::find();
+        $query = Task::find();
 
         // add conditions that should always apply here
 

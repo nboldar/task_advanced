@@ -24,7 +24,7 @@ use yii\db\ActiveRecord;
  * @property User $creator0
  * @property User $executor0
  */
-class Tasks extends ActiveRecord
+class Task extends ActiveRecord
 {
     /**
      * {@inheritdoc}
