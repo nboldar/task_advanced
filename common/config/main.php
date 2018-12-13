@@ -10,9 +10,10 @@ return [
         'bootstrap' => [
             'class' => \common\components\Bootstrap::className(),
         ],
-        'errorHandler' => [
-            'maxSourceLines' => 20,
-        ],
+//        'errorHandler' => [
+//            'maxSourceLines' => 30,
+//            'errorAction' => 'site/error',
+//        ],
         'bot' => [
             'class' => 'SonkoDmitry\Yii\TelegramBot\Component',
             'apiToken' => '799805964:AAEQyPmfLUIkQDGsvFZtw8yDzQPUG5Yy2UA',
@@ -23,6 +24,7 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -40,6 +42,12 @@ return [
                 '/projects' => 'projects/index',
                 '/telegram' => 'telegram/index',
                 '/task' => 'task/index',
+                '/team'=>'team/index',
+                '/user-team'=>'user-team/index',
+                '/user-team/index'=>'/user-team',
+                '/user-team/create'=>'user-team/create',
+                '/user-team/view'=>'user-team/view',
+                '/user-team/update'=>'user-team/update',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
