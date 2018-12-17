@@ -49,7 +49,7 @@ class TaskSearch extends Task
             'query' => $query,
             'pagination' => [
                 'forcePageParam' => false,
-                'pageSizeParam' => false,
+                'pageSizeParam' => 2,
                 'pageSize' => 2
             ]
         ]);

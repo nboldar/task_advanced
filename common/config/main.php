@@ -36,7 +36,9 @@ return [
                     'controller' => 'api/task',
                     'pluralize' => false,
                 ],
+               //'<module:rbac>/<controller:[\wd-]+>/<action:[\wd-]+>/<id:\d+>' => '<module>/<controller>/<action>',
                 '/' => 'site/index',
+                '/rbac'=>'rbac/default/index',
                 '/project/task' => 'task/index',
                 '/user' => 'user/index',
                 '/projects' => 'projects/index',
@@ -49,6 +51,8 @@ return [
                 '/user-team/view'=>'user-team/view',
                 '/user-team/update'=>'user-team/update',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+
+
             ],
         ],
     ],

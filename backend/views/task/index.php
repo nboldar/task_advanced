@@ -22,12 +22,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => function ($model, $key, $index, $grid) {
+            if ($model->finish < date('Y-m-d') && $model->status == 0) {
+                return ['class' => 'alert-danger'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'title',
-           // 'description:ntext',
+            // 'description:ntext',
             [
                 'attribute' => 'project',
                 'value' => 'project0.title',
@@ -55,7 +60,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    return \yii\helpers\Url::to(['task/' . $action, 'id' => $model->id]);
+                },
+            ],
         ],
     ]); ?>
 </div>

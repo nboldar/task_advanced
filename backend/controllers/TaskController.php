@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Task;
 use backend\models\search\TaskSearch;
+use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,7 +18,7 @@ class TaskController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    public function behaviors ()
     {
         return [
             'verbs' => [
@@ -33,7 +34,7 @@ class TaskController extends Controller
      * Lists all Tasks models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex ()
     {
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -46,11 +47,13 @@ class TaskController extends Controller
 
     /**
      * Displays a single Tasks model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView ($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -62,7 +65,7 @@ class TaskController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate ()
     {
         $model = new Task();
 
@@ -78,11 +81,13 @@ class TaskController extends Controller
     /**
      * Updates an existing Tasks model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate ($id)
     {
         $model = $this->findModel($id);
 
@@ -98,15 +103,45 @@ class TaskController extends Controller
     /**
      * Deletes an existing Tasks model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete ($id)
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDone ()
+    {
+        $searchModel = new TaskSearch();
+        $dataProvider = new ArrayDataProvider([
+            'models' => Task::findAll(['status' => '1']),
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionOutdated ()
+    {
+        $searchModel = new TaskSearch();
+        $dataProvider=new ArrayDataProvider([
+            'models' => Task::find()
+                ->where(['status'=>'0'])
+                ->andWhere('finish < curdate()')
+                ->all()
+        ]);
+            return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -118,7 +153,7 @@ class TaskController extends Controller
      * @return Task the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel ($id)
     {
         if (($model = Task::findOne($id)) !== null) {
             return $model;
