@@ -15,6 +15,12 @@ return [
         'rbac' => [
             'class' => \githubjeka\rbac\Module::className(),
         ],
+<<<<<<< HEAD
+=======
+        'rbac1' => [
+            'class' => 'backend\modules\rbac1\Module',
+        ],
+>>>>>>> 1f8a1dfc03d06a1432e062e7224d881b150afef7
     ],
     'components' => [
         'request' => [
