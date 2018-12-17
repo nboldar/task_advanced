@@ -22,7 +22,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "facebook/webdriver": "^1.6",
         "consik/yii2-websocket": "^1.0",
-        "sonko-dmitry/yii2-telegram-bot-api": "*"
+        "sonko-dmitry/yii2-telegram-bot-api": "*",
+        "githubjeka/yii2-gui-rbac": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

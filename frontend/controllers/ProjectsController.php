@@ -4,13 +4,46 @@ namespace frontend\controllers;
 
 use common\models\Project;
 use common\models\Task;
-use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\data\ArrayDataProvider;
-use yii\data\SqlDataProvider;
-use yii\db\Query;
+
+
 
 class ProjectsController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                //  'only' => ['logout', 'signup'],
+                'rules' => [
+                    [
+                        'actions' => ['index','single'],
+                        'allow' => true,
+                        'roles' => ['user'],
+                    ],
+                    [
+                        'actions' => ['index','single'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
     public function actionIndex ()
     {
 
