@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\Task;
+use yii\data\ArrayDataProvider;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -19,12 +21,12 @@ class TasksController extends \yii\web\Controller
                 //  'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'single'],
+                        'actions' => ['my', 'single'],
                         'allow' => true,
                         'roles' => ['user'],
                     ],
                     [
-                        'actions' => ['index', 'single', 'update'],
+                        'actions' => ['index', 'single', 'update','my'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
@@ -80,6 +82,16 @@ class TasksController extends \yii\web\Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionMy ()
+    {
+        $userId = \Yii::$app->user->getId();
+        $dataProvider = new ArrayDataProvider([
+            'models' => Task::findAll(['executor'=>$userId]),
+        ]);
+       // var_dump($dataProvider->models);
+        return $this->render('my',['dataProvider'=>$dataProvider]);
     }
 
 }

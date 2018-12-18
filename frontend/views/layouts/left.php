@@ -27,54 +27,60 @@ use yii\helpers\Html;
         </form>
         <!-- /.search form -->
 
-        <?= Nav::widget(
+        <?= \yii\widgets\Menu::widget(
             [
                 'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
                     [
                         'label' => '<span class="glyphicon glyphicon-th-list"></span> '
-                            . Html::encode('All Projects'),
-                        'options' => ['class' => 'header'],
+                            . Html::encode('Projects'),
+                        'options' => ['class' => 'header','aria-expanded'=>'true',],
                         'items' => [
                             [
                                 'label' => '<span class="glyphicon glyphicon-repeat"></span> '
-                                    . Html::encode('Projects in process'),
+                                    . Html::encode('All projects'),
                                 'icon' => 'file-code-o',
-                                'url' => ['/gii'],
+                                'url' => ['#'],
                             ],
                             [
                                 'label' => '<span class="glyphicon glyphicon-ok"></span> '
                                     . Html::encode('Projects done'),
-                                'url' => ['/debug'],
+                                'url' => ['#'],
                             ],
-                            ['label' => '<span class="glyphicon glyphicon-alert"></span> '
-                                . Html::encode('Projects done'),
+                            [
+                                'label' => '<span class="glyphicon glyphicon-alert"></span> '
+                                    . Html::encode('Projects in process'),
                                 'icon' => 'tasks',
                                 'url' => ['/tasks'],
-                                ],
-                        ],
-                    ],
-                    ['label' => 'Show done tasks', 'icon' => 'tasks', 'url' => ['/gii']],
-                    ['label' => 'Show not done tasks', 'icon' => 'tasks', 'url' => ['/debug']],
-                    ['label' => 'Projects', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Some tools',
-                        'icon' => 'share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            ['label' => 'Tasks', 'icon' => 'tasks', 'url' => ['/tasks'],],
-                            ['label' => 'Users', 'icon' => 'users', 'url' => ['/user'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-
                             ],
                         ],
                     ],
+                    [
+                        'label' => '<span class="glyphicon glyphicon-th-list"></span> '
+                            . Html::encode('My Tasks'),
+                        'options' => ['class' => 'header'],
+                        'items' => [
+                            [
+                                'label' => '<span class="glyphicon glyphicon-repeat"></span> '
+                                    . Html::encode('All Tasks'),
+                                'icon' => 'file-code-o',
+                                'url' => ['tasks/my'],
+                            ],
+                            [
+                                'label' => '<span class="glyphicon glyphicon-ok"></span> '
+                                    . Html::encode('Tasks done'),
+                                'url' => ['#'],
+                            ],
+                            [
+                                'label' => '<span class="glyphicon glyphicon-alert"></span> '
+                                    . Html::encode('Outdated tasks'),
+                                'icon' => 'tasks',
+                                'url' => ['#'],
+                            ],
+                        ],
+                    ],
+                    ['label' => 'Projects', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                 ],
             ]
         ) ?>
