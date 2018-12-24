@@ -63,7 +63,7 @@ class Task extends ActiveRecord
             'creator' => 'Creator',
             'executor' => 'Executor',
             'start' => 'Start',
-            'finish' => 'Finish',
+            'finish' => 'Deadline',
             'status' => 'Status',
             'project' => 'Project',
             'created_at' => 'Created At',

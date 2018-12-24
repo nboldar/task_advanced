@@ -70,7 +70,7 @@ AppAsset::register($this);
 
         <div class="row">
             <?php if (\Yii::$app->request->pathInfo == '') : ?>
-                <div class="col-md-12">
+                <div class="col-md-14">
                     <?= $content ?>
                 </div>
             <?php else : ?>

@@ -65,18 +65,18 @@ use yii\helpers\Html;
                                 'label' => '<span class="glyphicon glyphicon-repeat"></span> '
                                     . Html::encode('All Tasks'),
                                 'icon' => 'file-code-o',
-                                'url' => ['tasks/my'],
+                                'url' => ['tasks/index'],
                             ],
                             [
                                 'label' => '<span class="glyphicon glyphicon-ok"></span> '
                                     . Html::encode('Tasks done'),
-                                'url' => ['#'],
+                                'url' => ['tasks/done'],
                             ],
                             [
                                 'label' => '<span class="glyphicon glyphicon-alert"></span> '
                                     . Html::encode('Outdated tasks'),
                                 'icon' => 'tasks',
-                                'url' => ['#'],
+                                'url' => ['tasks/outdated'],
                             ],
                         ],
                     ],

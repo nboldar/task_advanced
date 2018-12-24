@@ -21,12 +21,12 @@ class TasksController extends \yii\web\Controller
                 //  'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['my', 'single'],
+                        'actions' => ['index', 'single', 'done', 'outdated','ok'],
                         'allow' => true,
                         'roles' => ['user'],
                     ],
                     [
-                        'actions' => ['index', 'single', 'update','my'],
+                        'actions' => ['index', 'single', 'update', 'my','ok'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
@@ -50,13 +50,17 @@ class TasksController extends \yii\web\Controller
     public function actionIndex ()
     {
 
-        $chat = new ChatServer();
+        // $chat = new ChatServer();
 //        if(!$chat->start()){
 //            $chat->start();
 //        }
 //$chat->start();
-        $tasks = Task::find()->all();
-        return $this->render('index', ['tasks' => $tasks,]);
+        $userId = \Yii::$app->user->getId();
+        $dataProvider = new ArrayDataProvider([
+            'models' => Task::findAll(['executor' => $userId]),
+        ]);
+
+        return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 
     public function actionSingle ($id)
@@ -84,14 +88,39 @@ class TasksController extends \yii\web\Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionMy ()
+    public function actionDone ()
     {
         $userId = \Yii::$app->user->getId();
         $dataProvider = new ArrayDataProvider([
-            'models' => Task::findAll(['executor'=>$userId]),
+            'models' => Task::findAll(['status' => '1', 'executor' => $userId]),
         ]);
-       // var_dump($dataProvider->models);
-        return $this->render('my',['dataProvider'=>$dataProvider]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionOutdated ()
+    {
+        $userId = \Yii::$app->user->getId();
+        $dataProvider = new ArrayDataProvider([
+            'models' => Task::find()
+                ->where(['status' => '0'])
+                ->andWhere('finish < curdate()')
+                ->andWhere(['executor' => $userId])
+                ->all(),
+        ]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionOk ($id)
+    {
+        $model = $this->findModel($id);
+        $model->status=1;
+        $model->save();
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
 }
