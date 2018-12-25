@@ -66,6 +66,7 @@ class Task extends ActiveRecord
             'finish' => 'Deadline',
             'status' => 'Status',
             'project' => 'Project',
+            'execution'=>'Execution date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

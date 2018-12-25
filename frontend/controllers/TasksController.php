@@ -119,6 +119,7 @@ class TasksController extends \yii\web\Controller
     {
         $model = $this->findModel($id);
         $model->status=1;
+        $model->execution=date('Y-m-d');
         $model->save();
         return $this->redirect(\Yii::$app->request->referrer);
     }
