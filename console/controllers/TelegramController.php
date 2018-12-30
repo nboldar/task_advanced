@@ -24,22 +24,26 @@ class TelegramController extends Controller
         $this->bot->setCurlOption(CURLOPT_TIMEOUT, 30);
         $this->bot->setCurlOption(CURLOPT_CONNECTTIMEOUT, 30);
         $this->bot->setCurlOption(CURLOPT_HTTPHEADER, ['Expect:']);
+        set_time_limit(0);
     }
 
     public function actionIndex ()
     {
-        $updates = $this->bot->getUpdates($this->getOffset() + 1);
-        $updCount = count($updates);
-        if ($updCount > 0) {
-            echo "New messages: " . $updCount . PHP_EOL;
-            foreach ($updates as $update) {
-                $this->updateOffset($update);
-                if ($message = $update->getMessage()) {
-                    $this->processCommand($message);
+        while (true) {
+            $updates = $this->bot->getUpdates($this->getOffset() + 1);
+            $updCount = count($updates);
+            if ($updCount > 0) {
+                echo "New messages: " . $updCount . PHP_EOL;
+                foreach ($updates as $update) {
+                    $this->updateOffset($update);
+                    if ($message = $update->getMessage()) {
+                        $this->processCommand($message);
+                    }
                 }
+            } else {
+                echo "There is no new messages" . PHP_EOL;
+                sleep(3);
             }
-        } else {
-            echo "There is no new messages" . PHP_EOL;
         }
 
     }

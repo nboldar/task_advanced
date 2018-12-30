@@ -6,8 +6,8 @@
  * Time: 22:27
  */
 
-use yii\bootstrap\Nav;
 use yii\helpers\Html;
+use kartik\sidenav\SideNav;
 
 ?>
 <aside class="main-sidebar">
@@ -27,20 +27,20 @@ use yii\helpers\Html;
         </form>
         <!-- /.search form -->
 
-        <?= \yii\widgets\Menu::widget(
+        <?= SideNav::widget(
             [
+                'type' => SideNav::TYPE_PRIMARY,
                 'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
                     [
                         'label' => '<span class="glyphicon glyphicon-th-list"></span> '
                             . Html::encode('Projects'),
-                        'options' => ['class' => 'header','aria-expanded'=>'true',],
+                        'options' => ['class' => 'header', 'aria-expanded' => 'true',],
                         'items' => [
                             [
                                 'label' => '<span class="glyphicon glyphicon-repeat"></span> '
                                     . Html::encode('All projects'),
-                                'icon' => 'file-code-o',
                                 'url' => ['#'],
                             ],
                             [
@@ -51,7 +51,6 @@ use yii\helpers\Html;
                             [
                                 'label' => '<span class="glyphicon glyphicon-alert"></span> '
                                     . Html::encode('Projects in process'),
-                                'icon' => 'tasks',
                                 'url' => ['/tasks'],
                             ],
                         ],
@@ -75,7 +74,6 @@ use yii\helpers\Html;
                             [
                                 'label' => '<span class="glyphicon glyphicon-alert"></span> '
                                     . Html::encode('Outdated tasks'),
-                                'icon' => 'tasks',
                                 'url' => ['tasks/outdated'],
                             ],
                         ],

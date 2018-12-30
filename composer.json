@@ -23,7 +23,8 @@
         "facebook/webdriver": "^1.6",
         "consik/yii2-websocket": "^1.0",
         "sonko-dmitry/yii2-telegram-bot-api": "*",
-        "githubjeka/yii2-gui-rbac": "^1.0"
+        "githubjeka/yii2-gui-rbac": "^1.0",
+        "kartik-v/yii2-widget-sidenav": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

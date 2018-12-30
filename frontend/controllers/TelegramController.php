@@ -16,6 +16,7 @@ class TelegramController extends \yii\web\Controller
         $bot->setCurlOption(CURLOPT_TIMEOUT, 30);
         $bot->setCurlOption(CURLOPT_CONNECTTIMEOUT, 30);
         $bot->setCurlOption(CURLOPT_HTTPHEADER, ['Expect:']);
+
         $updates = $bot->getUpdates();
         $messages = [];
         foreach ($updates as $update) {
@@ -27,7 +28,7 @@ class TelegramController extends \yii\web\Controller
             ];
         }
 
-        return $this->render('index',['messages'=>$messages]);
+        return $this->render('index', ['messages' => $messages]);
     }
 
 }

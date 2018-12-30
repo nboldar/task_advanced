@@ -21,12 +21,12 @@ class TasksController extends \yii\web\Controller
                 //  'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'single', 'done', 'outdated','ok'],
+                        'actions' => ['index', 'single', 'done', 'outdated', 'ok'],
                         'allow' => true,
                         'roles' => ['user'],
                     ],
                     [
-                        'actions' => ['index', 'single', 'update', 'my','ok'],
+                        'actions' => ['index', 'single', 'update', 'my', 'ok'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
@@ -118,8 +118,8 @@ class TasksController extends \yii\web\Controller
     public function actionOk ($id)
     {
         $model = $this->findModel($id);
-        $model->status=1;
-        $model->execution=date('Y-m-d');
+        $model->status = 1;
+        $model->execution = date('Y-m-d');
         $model->save();
         return $this->redirect(\Yii::$app->request->referrer);
     }
