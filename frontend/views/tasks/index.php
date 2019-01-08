@@ -7,7 +7,7 @@
  */
 
 use yii\widgets\ListView;
-use yii\widgets\Pjax;
+
 
 $this->title = 'Tasks';
 $this->params['breadcrumbs'][] = $this->title;
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </tbody>
         </table>
     </div>
-<!--    <div class="col-md-2">-->
+    <div class="col-md-1">
 <!--        <h4>Username:</h4> <br/>-->
 <!--        <input id="username" type="text">-->
 <!--        <button id="btnSetUsername">Set username</button>-->
@@ -51,5 +51,5 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--        <button id="btnSend">Send</button>-->
 <!--        <div id="response" style="color:#D00"></div>-->
 
-<!--    </div>-->
+    </div>
 </div>

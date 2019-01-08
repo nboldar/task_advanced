@@ -6,11 +6,15 @@
  * Time: 20:28
  */
 
+/**
+ * @var \common\models\Chat $history
+ */
 use yii\widgets\DetailView;
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 <div class="row">
@@ -51,7 +55,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <a href="./update?id=<?= $model->id ?>" class="btn btn-primary" role="button">Update</a>
     </div>
     <div class="col-md-5">
-        comments
+        <form action="#" name="chat_form" id="chat_form">
+            <label for="">
+                print the message
+                <input type="hidden" name="channel" value="<?= $channel?>">
+                <input type="hidden" name="user_id" value="<?= \Yii::$app->user->getId()?>">
+                <input type="text" name="message">
+                <input type="submit">
+            </label>
+            <hr>
+            <div id="root_chat">
+                <?php foreach ($history as $msg):?>
+                <div>
+                    <span><?= $msg->user->username?>: <?= $msg->message?></span>
+                </div>
+                <?php endforeach;?>
+
+            </div>
+        </form>
 
     </div>
 </div>

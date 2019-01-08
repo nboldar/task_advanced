@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Chat;
 use common\models\Task;
 use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
@@ -49,12 +50,6 @@ class TasksController extends \yii\web\Controller
 
     public function actionIndex ()
     {
-
-        // $chat = new ChatServer();
-//        if(!$chat->start()){
-//            $chat->start();
-//        }
-//$chat->start();
         $userId = \Yii::$app->user->getId();
         $dataProvider = new ArrayDataProvider([
             'models' => Task::findAll(['executor' => $userId]),
@@ -67,7 +62,12 @@ class TasksController extends \yii\web\Controller
     {
 
         $model = $this->findModel($id);
-        return $this->render('single', ['model' => $model,]);
+        $channel = "task_{$id}";
+        return $this->render('single', [
+            'model' => $model,
+            'history' => Chat::getChannelHistory($channel),
+            'channel' => $channel,
+            ]);
     }
 
     public function actionUpdate ($id)
