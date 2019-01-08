@@ -9,6 +9,7 @@
 namespace console\components;
 
 use common\models\Chat;
+use common\models\User;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
@@ -27,7 +28,14 @@ class WebsocketServer implements MessageComponentInterface
 
     public function onClose (ConnectionInterface $conn)
     {
-        $this->clients->detach($conn);
+        foreach ($this->clients as $clients) {
+            foreach ($clients as $key => $item) {
+                if ($key == $conn->resourceId) {
+                    unset($clients[$key]);
+                    break;
+                }
+            }
+        }
         echo "\n conn {$conn->resourceId} disconnect \n";
     }
 
@@ -41,10 +49,21 @@ class WebsocketServer implements MessageComponentInterface
     public function onMessage (ConnectionInterface $from, $data)
     {
         $data = json_decode($data, true);
-        $channel = $data['channel'];
         (new Chat($data))->save();
+        $lastIdChatInsert = \Yii::$app->db->lastInsertID;
+        $lastChatMsg = Chat::findOne(['id' => $lastIdChatInsert]);
+        $channel = $data['channel'];
+        $sender = User::findOne(['id' => $data['user_id']])->username;
+
+        $msg = [
+            'sender' => $sender,
+            'message' => $data['message'],
+            'time' => $lastChatMsg->created_at,
+        ];
+
+
         foreach ($this->clients[$channel] as $client) {
-            $client->send($data['message']);
+            $client->send(json_encode($msg));
         }
     }
 

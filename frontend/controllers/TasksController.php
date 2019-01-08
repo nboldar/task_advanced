@@ -64,10 +64,11 @@ class TasksController extends \yii\web\Controller
         $model = $this->findModel($id);
         $channel = "task_{$id}";
         return $this->render('single', [
+            'user_id' => \Yii::$app->user->getId(),
             'model' => $model,
             'history' => Chat::getChannelHistory($channel),
             'channel' => $channel,
-            ]);
+        ]);
     }
 
     public function actionUpdate ($id)

@@ -2,7 +2,6 @@ if (!window.WebSocket) {
     alert('Your browser doesn\'t support Websockets ');
 }
 let channel = document.getElementsByName('channel')[0].value;
-console.log(channel);
 let webSocket = new WebSocket(`ws://task.local:8080?channel=${channel}`);
 document.getElementById("chat_form")
     .addEventListener('submit', function (event) {
@@ -17,10 +16,21 @@ document.getElementById("chat_form")
         return false;
     });
 webSocket.onmessage = function (event) {
-    let data = event.data;
-    let messageContaner = document.createElement("div");
-    let textNode = document.createTextNode(data);
-    messageContaner.appendChild(textNode);
+    let data = JSON.parse(event.data);
+    let messageContainer = document.createElement("tr");
+
+    let senderContainer = document.createElement("td");
+    senderContainer.innerHTML = data.sender + ": ";
+
+    let msgContainer = document.createElement("td");
+    msgContainer.innerHTML = data.message;
+
+    let timeContainer = document.createElement("td");
+    timeContainer.innerHTML = data.time;
+
+    messageContainer.appendChild(senderContainer);
+    messageContainer.appendChild(msgContainer);
+    messageContainer.appendChild(timeContainer);
     document.getElementById("root_chat")
-        .appendChild(messageContaner);
+        .appendChild(messageContainer);
 };
